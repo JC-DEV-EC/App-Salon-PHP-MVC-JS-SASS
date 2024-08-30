@@ -11,8 +11,8 @@
     </div>
 
     <div class="campo">
-        <label for="apeliido">Apeliido</label>
-        <input type="text" id="apeliido" name="apeliido" placeholder="Tu Apeliido" value="<?php echo s($usuario->apellido); ?>">
+        <label for="apellido">Apellido</label>
+        <input type="text" id="apellido" name="apellido" placeholder="Tu Apellido" value="<?php echo s($usuario->apellido); ?>">
     </div>
 
     <div class="campo">

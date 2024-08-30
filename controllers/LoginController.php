@@ -2,6 +2,7 @@
 
 namespace Controllers;
 
+use Classes\Email;
 use Model\Usuario;
 use MVC\Router;
 
@@ -30,16 +31,37 @@ class LoginController {
 
         // Alertas vacias
         $alertas = [];
-
         if($_SERVER['REQUEST_METHOD'] === 'POST') {
-
             $usuario->sincronizar($_POST);
             $alertas = $usuario->validarNuevaCuenta();
 
             // Revisar que alerta este vacio
             if(empty($alertas)) {
-                // Verificar que el usuario no este rregistrado
-                echo "Pasaste la validación";
+                // Verificar que el usuario no este registrado
+                $resultado = $usuario->existeUsuario();
+
+                if($resultado->num_rows) {
+                    $alertas = Usuario::getAlertas();
+                } else {
+                    // Hashear el password
+                    $usuario->hashPassword();
+
+                    // Generar un Token unico
+                    $usuario->crearToken();
+
+                    // Enviar el Email
+                    $email = new Email($usuario->nombre, $usuario->email, $usuario->token);
+                    $email->enviarConfirmacion();
+
+                    // Crear el usuario
+                    $resultado = $usuario->guardar();
+
+                    // debuguear($usuario);
+
+                    if($resultado) {
+                        header('Location: /mensaje');
+                    }
+                }
             }
         }
 
@@ -48,4 +70,9 @@ class LoginController {
             'alertas' => $alertas
         ]);
     }
+
+    public static function mensaje(Router $router) {
+        $router->render('auth/mensaje');
+    }
+
 }

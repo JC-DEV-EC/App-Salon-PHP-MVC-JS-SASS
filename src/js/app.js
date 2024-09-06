@@ -316,6 +316,50 @@ function mostrarResumen() {
     resumen.appendChild(botonReservar);
 }
 
-function reservarCita() {
+async function reservarCita() {
+    const {nombre, fecha, hora, servicios, id} = cita;
+
+    const idServicios = servicios.map( servicio => servicio.id );
+
+    const datos = new FormData();
+
+    datos.append('fecha', fecha);
+    datos.append('hora', hora);
+    datos.append('usuarioId', id);
+    datos.append('servicios', idServicios);
+
+    try {
+        // Peticion hacia la api
+        const url = 'http://localhost:3000/api/citas'
+        const respuesta = await fetch(url, {
+            method: 'POST',
+            body: datos
+        });
     
+        const resultado = await respuesta.json();
+        console.log(resultado.resultado);
+    
+        if(resultado.resultado) {
+            Swal.fire({
+                icon: "success",
+                title: "Cita creada",
+                text: "Tu cita fue creada correctamente!",
+                button: 'OK'
+            }).then( () => {
+                setTimeout( () => {
+                    window.location.reload();
+                }, 3000);
+            })
+        }
+
+    } catch (error) {
+        Swal.fire({
+            icon: "error",
+            title: "Error",
+            text: "Hubo un error al guardar la cita",
+        });
+    }
+
+
+    // console.log([...datos]);
 }

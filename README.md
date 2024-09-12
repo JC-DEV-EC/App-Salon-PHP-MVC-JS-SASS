@@ -1,11 +1,10 @@
-# App Salón - PHP MVC JS SASS
+# App Salón
 
 ![Licencia MIT](https://img.shields.io/badge/licencia-MIT-blue.svg)
 ![Estado del Proyecto](https://img.shields.io/badge/estado-en%20desarrollo-yellow.svg)
 ![Versión](https://img.shields.io/badge/versión-1.0.0-brightgreen.svg)
 [![MIT License](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-![App Salón](https://yourimageurl.com/screenshot.png)
 
 **App Salón** es una aplicación web desarrollada para la gestión de reservas en un salón de belleza. Utiliza un patrón de arquitectura MVC en PHP junto con tecnologías modernas para el frontend, permitiendo a los usuarios gestionar citas de manera eficiente y sencilla.
 
